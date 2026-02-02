@@ -2,11 +2,10 @@ FROM ghcr.io/actions/actions-runner:latest
 
 USER root
 
-# Install Kaniko
-RUN cp out/executor /kaniko/executor && \
-    chmod +x /kaniko/executor
+COPY ./out/executor /kaniko/executor
 
-# Add kaniko to PATH
+RUN chmod +x /kaniko/executor
+
 ENV PATH="/kaniko:${PATH}"
 
 USER runner

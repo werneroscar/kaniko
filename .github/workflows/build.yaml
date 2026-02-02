@@ -30,3 +30,4 @@ jobs:
         with:
           name: executor-binary
           path: out/executor
+          retention-days: 7
