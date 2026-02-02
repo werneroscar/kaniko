@@ -1,0 +1,33 @@
+name: Build and Upload Artifacts
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io/${{ github.repository_owner }}
+
+jobs:
+  build-executor:
+    name: Build Executor Binary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-go@v6
+        # with:
+        #   go-version: '1.23'
+
+      - name: Build Executor
+        run: |
+          make out/executor
+
+      - name: Upload Executor Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: executor-binary
+          path: out/executor
+          retention-days: 7
